@@ -1,0 +1,41 @@
+High Cohesion - Only class has one responsibility
+Loose Coupling - Classes/Layers should not have too much dependency on each other
+
+CREATE  TABLE IF NOT EXISTS `Category` (
+	`category_id` INT  AUTO_INCREMENT ,
+	`category_name` VARCHAR(150) NOT NULL ,
+  	`description` VARCHAR(250) NOT NULL ,
+  	 PRIMARY KEY (`category_id`)
+);
+INSERT INTO `category` (`category_id`, `category_name`, `description`) VALUES (NULL, 'Electronics', 'Best Electronics Products');
+
+CREATE  TABLE IF NOT EXISTS `Product` (
+  `product_id` INT  AUTO_INCREMENT ,
+  `product_name` VARCHAR(150) NOT NULL ,
+  `description` VARCHAR(250) NOT NULL ,
+  `price_per_qty` DOUBLE NOT NULL,
+  `available_qty` INT NOT NULL,
+  `category_id_fk` INT,
+   CONSTRAINT fk_category 
+   FOREIGN KEY(category_id_fk) REFERENCES Category(category_id) ,
+  PRIMARY KEY (`product_id`) 
+ );
+
+SELECT * FROM `product` p, `category` c WHERE p.category_id_fk = c.category_id;
+
+SELECT p.product_name, p.description, p.price_per_qty, p.available_qty, c.category_name, c.description
+FROM `product` p, `category` c WHERE p.category_id_fk = c.category_id;
+
+SELECT p.product_name as 'Product Name', p.description, p.price_per_qty, p.available_qty, c.category_name, c.description FROM `product` p, `category` c WHERE p.category_id_fk = c.category_id;
+ 
+SELECT p.product_id, p.product_name, p.description as 'product_description', p.price_per_qty, p.available_qty, c.category_name, c.description FROM `product` p, `category` c WHERE p.category_id_fk = c.category_id;
+ 
+UPDATE `product` SET `price_per_qty` = 1000 WHERE `product_id` = 2;
+
+DELETE FROM `product` WHERE `product_id` = 2 AND `product_name` = 'ABC';
+ 
+ //////////////
+ Ctrl + O will help to find a method inside a class
+ Ctrl + Shift + R will help you find any file *filename*
+ Long press Ctrl and hover mouse on andy method and click on it, it will take you to that method
+ Rt Click on any method and choose open call hierarchy to find from where this method is called
